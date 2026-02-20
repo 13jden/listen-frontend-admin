@@ -13,7 +13,7 @@ export const getCheckCode = async () => {
 // 登录接口
 export const login = async (form) => {
   try {
-    const response = await httpGet('/admin/login', form);
+    const response = await httpPost('/admin/login', form);
     console.log(response);
     return response;
   } catch (error) {
