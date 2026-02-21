@@ -49,10 +49,11 @@
 import { ref, onMounted } from 'vue';
 import router from '../router/index';
 import { getdata } from '../api/admin';
-import { da } from 'element-plus/es/locales.mjs';
+import { ElLoading } from 'element-plus';
 
 // 更新时间
 const updateTime = ref('2025/02/19');
+const loading = ref(false);
 
 const statsData = ref([]);
 // 获取卡片背景样式
@@ -93,23 +94,41 @@ const handleCardClick = (index) => {
 };
 
 
+// 初始化默认数据，避免等待API时空白
+statsData.value = [
+  { label: '新注册人数', value: '--', change: 0 },
+  { label: '总人数', value: '--', change: 0 },
+  { label: '今日测试数', value: '--', change: 0 },
+  { label: '总测试数', value: '--', change: 0 },
+];
+
 // 调用接口获取数据
 const fetchData = async () => {
   try {
     const response = await getdata();
-    const data = response; // 假设接口返回的数据格式为 { newUserNum, userImprove, userNum, userNumImprove, newTestTimes, newTimesImprove, allTestTimes, allTimesImprove }
-
+    const data = response || {};
+    
     // 更新 statsData
     statsData.value = [
-      { label: '新注册人数', value: data.newUserNum, change: data.userImprove },
-      { label: '总人数',value: data.userNum, change: data.userNumImprove  },
-      { label: '今日测试数',value: data.newTestTimes, change: data.newTimesImprove  },
-      { label: '总测试数', value: data.allTestTimes, change: data.allTimesImprove }, // 根据实际需求调整
+      { label: '新注册人数', value: data.newUserNum ?? 0, change: data.userImprove ?? 0 },
+      { label: '总人数', value: data.userNum ?? 0, change: data.userNumImprove ?? 0 },
+      { label: '今日测试数', value: data.newTestTimes ?? 0, change: data.newTimesImprove ?? 0 },
+      { label: '总测试数', value: data.allTestTimes ?? 0, change: data.allTimesImprove ?? 0 },
     ];
-    const date = new Date(data.time);
-    updateTime.value = date.toLocaleDateString('zh-CN'); 
+    
+    if (data.time) {
+      const date = new Date(data.time);
+      updateTime.value = date.toLocaleDateString('zh-CN');
+    }
   } catch (error) {
     console.error('获取数据失败:', error);
+    // 接口失败时显示默认数据
+    statsData.value = [
+      { label: '新注册人数', value: 0, change: 0 },
+      { label: '总人数', value: 0, change: 0 },
+      { label: '今日测试数', value: 0, change: 0 },
+      { label: '总测试数', value: 0, change: 0 },
+    ];
   }
 };
 

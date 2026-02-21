@@ -14,8 +14,8 @@ export default defineConfig({
     open: true,  // 启动时自动打开浏览器
     proxy: {
       '/api': {
-        target: 'http://115.190.53.97:8081', // 后端 API 地址
-        // target: 'http://localhost:8081', // 后端 API 地址
+        // target: 'http://115.190.53.97:8081', // 后端 API 地址
+        target: 'http://localhost:8081', // 后端 API 地址
         changeOrigin: true, // 修改源地址，避免跨域问题
         rewrite: (path) => path.replace(/^\/api/, ''), // 可选：去掉路径中的 `/api`
       },

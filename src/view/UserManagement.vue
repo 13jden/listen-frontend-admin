@@ -2,8 +2,8 @@
   <div class="user-management">
     <h1 class="title">用户管理</h1>
 
-    <!-- 搜索框 -->
-    <div class="search-box" style="display: flex; align-items: center;">
+    <!-- 搜索框 + 高级筛选按钮 -->
+    <div class="search-box">
       <el-input
         v-model="searchWord"
         placeholder="请输入姓名/病历号/医院名/手机号搜索"
@@ -13,7 +13,75 @@
         style="width: 300px; margin-right: 10px;"
       ></el-input>
       <el-button type="primary" @click="searchUsers">查询</el-button>
+      <el-button @click="toggleAdvanced" style="margin-left: 10px;">
+        <el-icon><Filter /></el-icon>
+        高级筛选
+      </el-button>
     </div>
+
+    <!-- 高级筛选面板 -->
+    <el-collapse-transition>
+      <el-card v-show="showAdvanced" class="advanced-search-card">
+        <el-form :inline="true" :model="advancedForm" class="advanced-form">
+          <el-row :gutter="20">
+            <el-col :span="6">
+              <el-form-item label="年龄区间">
+                <el-input-number v-model="advancedForm.ageMin" :min="0" :max="120" placeholder="最小" style="width: 90px" />
+                <span style="margin: 0 5px">-</span>
+                <el-input-number v-model="advancedForm.ageMax" :min="0" :max="120" placeholder="最大" style="width: 90px" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="测试次数">
+                <el-input-number v-model="advancedForm.testTimesMin" :min="0" placeholder="最少" style="width: 90px" />
+                <span style="margin: 0 5px">-</span>
+                <el-input-number v-model="advancedForm.testTimesMax" :min="0" placeholder="最多" style="width: 90px" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="医院">
+                <el-select v-model="advancedForm.hospitalId" placeholder="请选择医院" clearable style="width: 180px">
+                  <el-option
+                    v-for="hospital in hospitals"
+                    :key="hospital.id"
+                    :label="hospital.name"
+                    :value="hospital.id"
+                  />
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item label="得分区间">
+                <el-input-number v-model="advancedForm.scoreMin" :min="0" :max="100" placeholder="最低" style="width: 90px" />
+                <span style="margin: 0 5px">-</span>
+                <el-input-number v-model="advancedForm.scoreMax" :min="0" :max="100" placeholder="最高" style="width: 90px" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row :gutter="20">
+            <el-col :span="12">
+              <el-form-item label="注册时间">
+                <el-date-picker
+                  v-model="advancedForm.dateRange"
+                  type="daterange"
+                  range-separator="至"
+                  start-placeholder="开始日期"
+                  end-placeholder="结束日期"
+                  value-format="YYYY-MM-DD"
+                  style="width: 350px"
+                />
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item>
+                <el-button type="primary" @click="doAdvancedSearch">应用筛选</el-button>
+                <el-button @click="resetAdvanced">重置</el-button>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+      </el-card>
+    </el-collapse-transition>
 
     <!-- 用户列表表格 -->
     <el-table :data="userList" border style="width: 100%" stripe>
@@ -105,14 +173,16 @@
 <script setup>
 import { ref, reactive, onMounted } from "vue";
 import { getUserList, searchUser, getHospital, updateUser, deleteUser } from "@/api/user";
-import { ElButton, ElDialog, ElForm, ElInput, ElFormItem, ElLink, ElSelect, ElOption } from 'element-plus';
+import { ElButton, ElDialog, ElForm, ElInput, ElFormItem, ElLink, ElSelect, ElOption, ElInputNumber, ElDatePicker } from 'element-plus';
 import { ElMessage,ElMessageBox } from 'element-plus';
+import { Filter } from '@element-plus/icons-vue';
 
 import router from '../router/index';
 
 const searchWord = ref(""); // 搜索关键词
 const userList = ref([]); // 用户列表
 const dialogVisible = ref(false); // 控制弹窗是否可见
+const showAdvanced = ref(false); // 高级筛选显示状态
 const editForm = reactive({
   userId: "",
   name: "",
@@ -120,6 +190,43 @@ const editForm = reactive({
   hospitalId: "",
 }); // 编辑表单的数据
 const hospitals = ref([]); // 存储医院列表
+
+// 高级筛选表单
+const advancedForm = reactive({
+  ageMin: null,
+  ageMax: null,
+  testTimesMin: null,
+  testTimesMax: null,
+  hospitalId: null,
+  scoreMin: null,
+  scoreMax: null,
+  dateRange: []
+});
+
+// 切换高级筛选显示
+const toggleAdvanced = () => {
+  showAdvanced.value = !showAdvanced.value;
+};
+
+// 执行高级筛选
+const doAdvancedSearch = () => {
+  console.log('高级筛选条件：', advancedForm);
+  ElMessage.success('筛选条件已应用');
+  fetchUserList();
+};
+
+// 重置高级筛选
+const resetAdvanced = () => {
+  advancedForm.ageMin = null;
+  advancedForm.ageMax = null;
+  advancedForm.testTimesMin = null;
+  advancedForm.testTimesMax = null;
+  advancedForm.hospitalId = null;
+  advancedForm.scoreMin = null;
+  advancedForm.scoreMax = null;
+  advancedForm.dateRange = [];
+  ElMessage.info('筛选条件已重置');
+};
 
 // 重置表单数据
 const resetForm = () => {
@@ -263,6 +370,15 @@ onMounted(() => {
   align-items: center; /* 垂直居中 */
   margin-bottom: 20px;
   width: 100%; /* 宽度设置为100%，或者根据需要调整 */
+}
+
+.advanced-search-card {
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.advanced-form {
+  padding: 10px 0;
 }
 
 .pagination {

@@ -30,36 +30,67 @@
             text-color="#bfcbd9"
             active-text-color="#409EFF"
           >
+            <!-- 首页 -->
             <el-menu-item index="/home/index">
-              <el-icon>
-                <House />
-              </el-icon>
+              <el-icon><House /></el-icon>
               <span>首页</span>
             </el-menu-item>
+
+            <!-- 系统管理分组 -->
+            <el-sub-menu index="/system">
+              <template #title>
+                <el-icon><Tools /></el-icon>
+                <span>系统管理</span>
+              </template>
+              <el-menu-item index="/home/admin">
+                <el-icon><UserFilled /></el-icon>
+                <span>管理员管理</span>
+              </el-menu-item>
+              <el-menu-item index="/home/role">
+                <el-icon><Lock /></el-icon>
+                <span>角色权限</span>
+              </el-menu-item>
+            </el-sub-menu>
+
+            <!-- 用户管理 -->
             <el-menu-item index="/home/user">
-              <el-icon>
-                <User />
-              </el-icon>
+              <el-icon><User /></el-icon>
               <span>用户管理</span>
             </el-menu-item>
+
+            <!-- 测试音频管理 -->
             <el-menu-item index="/home/audio">
-              <el-icon>
-                <Headset />
-              </el-icon>
+              <el-icon><Headset /></el-icon>
               <span>测试音频管理</span>
             </el-menu-item>
+
+            <!-- 测试记录 -->
             <el-menu-item index="/home/test">
-              <el-icon>
-                <Clipboard />
-              </el-icon>
-              <span>测试情况</span>
+              <el-icon><Document /></el-icon>
+              <span>测试记录</span>
             </el-menu-item>
+
+            <!-- 医院管理 -->
             <el-menu-item index="/home/hospital">
-              <el-icon>
-                <Clipboard />
-              </el-icon>
+              <el-icon><Bell /></el-icon>
               <span>医院管理</span>
             </el-menu-item>
+
+            <!-- 数据统计分组 -->
+            <el-sub-menu index="/statistics">
+              <template #title>
+                <el-icon><DataLine /></el-icon>
+                <span>数据统计</span>
+              </template>
+              <el-menu-item index="/home/statistics">
+                <el-icon><TrendCharts /></el-icon>
+                <span>数据概览</span>
+              </el-menu-item>
+              <el-menu-item index="/home/ai-analysis">
+                <el-icon><MagicStick /></el-icon>
+                <span>AI辅助分析</span>
+              </el-menu-item>
+            </el-sub-menu>
           </el-menu>
         </el-aside>
 
@@ -77,6 +108,10 @@
 <script setup>
 import { onBeforeMount, ref, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
+import {
+  House, User, Headset, Document, Tools, DataLine,
+  UserFilled, Lock, TrendCharts, MagicStick, Bell, List, Operation
+} from '@element-plus/icons-vue';
 
 const router = useRouter();
 const route = useRoute();

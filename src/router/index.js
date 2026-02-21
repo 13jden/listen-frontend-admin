@@ -61,7 +61,43 @@ const routes = [
                 meta: {
                     title: '医院管理',
                 },
-                component: () => import('../view/Hospital.vue') 
+                component: () => import('../view/Hospital.vue')
+            },
+            // 数据统计
+            {
+                path: 'statistics',
+                name: 'Statistics',
+                meta: {
+                    title: '数据统计',
+                },
+                component: () => import('../view/Statistics.vue')
+            },
+            // AI辅助分析
+            {
+                path: 'ai-analysis',
+                name: 'AIAnalysis',
+                meta: {
+                    title: 'AI辅助分析',
+                },
+                component: () => import('../view/AIAnalysis.vue')
+            },
+            // 管理员管理
+            {
+                path: 'admin',
+                name: 'AdminManagement',
+                meta: {
+                    title: '管理员管理',
+                },
+                component: () => import('../view/AdminManagement.vue')
+            },
+            // 角色权限
+            {
+                path: 'role',
+                name: 'RoleManagement',
+                meta: {
+                    title: '角色权限',
+                },
+                component: () => import('../view/RoleManagement.vue')
             }
         ]
     }
