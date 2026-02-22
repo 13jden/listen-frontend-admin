@@ -309,6 +309,7 @@ onMounted(() => {
 <style scoped>
 .role-management {
   padding: 20px;
+  background: #fff;
 }
 
 .page-header {
@@ -328,6 +329,9 @@ onMounted(() => {
 .role-card {
   margin-bottom: 20px;
   transition: transform 0.3s;
+  background: #fff;
+  border: 1px solid #ebeef5;
+  border-radius: 12px;
 }
 
 .role-card:hover {
@@ -367,8 +371,8 @@ onMounted(() => {
   display: flex;
   justify-content: space-around;
   padding: 15px 0;
-  border-top: 1px solid #ebeef5;
-  border-bottom: 1px solid #ebeef5;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   margin-bottom: 15px;
 }
 
@@ -380,12 +384,12 @@ onMounted(() => {
   display: block;
   font-size: 24px;
   font-weight: 600;
-  color: #409eff;
+  color: #06b6d4;
 }
 
 .stat-label {
   font-size: 12px;
-  color: #909399;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .role-actions {

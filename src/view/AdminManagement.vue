@@ -371,6 +371,8 @@ onMounted(() => {
 <style scoped>
 .admin-management {
   padding: 20px;
+  background: #fff;
+  min-height: 100%;
 }
 
 .page-header {
@@ -389,6 +391,9 @@ onMounted(() => {
 
 .search-card {
   margin-bottom: 20px;
+  background: #fff;
+  border: 1px solid #ebeef5;
+  border-radius: 12px;
 }
 
 .search-form {
@@ -399,6 +404,9 @@ onMounted(() => {
 
 .table-card {
   margin-bottom: 20px;
+  background: #fff;
+  border: 1px solid #ebeef5;
+  border-radius: 12px;
 }
 
 .pagination-wrapper {
@@ -409,11 +417,56 @@ onMounted(() => {
 
 :deep(.el-table) {
   font-size: 14px;
+  background: transparent !important;
+  border-radius: 12px;
 }
 
 :deep(.el-table th) {
-  background-color: #f5f7fa !important;
+  background: #f5f7fa !important;
   font-weight: 600;
+  color: #303133 !important;
+}
+
+:deep(.el-table__body td) {
+  background: transparent !important;
+  color: rgba(255, 255, 255, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+:deep(.el-table__body tr:hover > td) {
+  background: rgba(6, 182, 212, 0.1) !important;
+}
+
+:deep(.el-table::before) {
+  display: none;
+}
+
+:deep(.el-input__wrapper) {
+  background: #fff !important;
+  border: 1px solid #dcdfe6 !important;
+  box-shadow: none !important;
+}
+
+:deep(.el-input__inner) {
+  color: #303133 !important;
+}
+
+:deep(.el-button--primary) {
+  background: #409eff;
+  border: none;
+}
+
+:deep(.el-dialog) {
+  background: #fff;
+  border-radius: 8px;
+}
+
+:deep(.el-dialog__title) {
+  color: #303133;
+}
+
+:deep(.el-form-item__label) {
+  color: #606266 !important;
 }
 
 :deep(.el-switch) {

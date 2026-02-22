@@ -352,29 +352,36 @@ onMounted(() => {
 <style scoped>
 .user-management {
   padding: 20px;
-  background-color: #f5f7fa;
-  border-radius: 8px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  background: #fff;
+  border-radius: 12px;
+  min-height: 100%;
 }
 
 .title {
   text-align: center;
   margin-bottom: 20px;
   font-size: 24px;
+  font-weight: 600;
   color: #303133;
 }
 
 .search-box {
   display: flex;
-  justify-content: center; /* 水平居中 */
-  align-items: center; /* 垂直居中 */
+  justify-content: center;
+  align-items: center;
   margin-bottom: 20px;
-  width: 100%; /* 宽度设置为100%，或者根据需要调整 */
+  width: 100%;
+  padding: 20px;
+  background: #f5f7fa;
+  border-radius: 12px;
+  border: 1px solid #ebeef5;
 }
 
 .advanced-search-card {
   margin-bottom: 20px;
-  border-radius: 8px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #ebeef5;
 }
 
 .advanced-form {
@@ -393,10 +400,13 @@ onMounted(() => {
 
 .el-table {
   margin-top: 20px;
+  background: transparent !important;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .el-table--striped .el-table__body tr.el-table__row--striped td {
-  background-color: #fafafa;
+  background-color: rgba(255, 255, 255, 0.02) !important;
 }
 
 .el-table--border {
@@ -404,8 +414,94 @@ onMounted(() => {
 }
 
 .el-table__header th {
-  background-color: #f5f7fa;
-  font-weight: bold;
+  background: #f5f7fa !important;
+  font-weight: 600;
+  color: #303133 !important;
+}
+
+.el-table__body td {
+  background: #fff !important;
   color: #303133;
+  border-bottom: 1px solid #ebeef5 !important;
+}
+
+.el-table__body tr:hover > td {
+  background: #f5f7fa !important;
+}
+
+.el-table::before {
+  display: none;
+}
+
+.el-table__empty-text {
+  color: #909399;
+}
+
+/* 分页样式 */
+:deep(.el-pagination) {
+  --el-pagination-bg-color: #fff;
+  --el-pagination-text-color: #606266;
+  --el-pagination-button-bg-color: #f5f7fa;
+  --el-pagination-hover-color: #409eff;
+}
+
+:deep(.el-input__wrapper) {
+  background: #fff !important;
+  border: 1px solid #dcdfe6 !important;
+  box-shadow: none !important;
+}
+
+:deep(.el-input__inner) {
+  color: #303133 !important;
+}
+
+:deep(.el-select__wrapper) {
+  background: #fff !important;
+  border: 1px solid #dcdfe6 !important;
+  box-shadow: none !important;
+}
+
+:deep(.el-button--primary) {
+  background: #409eff;
+  border: none;
+}
+
+:deep(.el-button--primary:hover) {
+  background: #66b1ff;
+}
+
+:deep(.el-dialog) {
+  background: #fff;
+  border-radius: 8px;
+}
+
+:deep(.el-dialog__title) {
+  color: #303133;
+}
+
+:deep(.el-dialog__body) {
+  color: #606266;
+}
+
+:deep(.el-form-item__label) {
+  color: #606266 !important;
+}
+
+:deep(.el-select-dropdown) {
+  background: #fff !important;
+  border: 1px solid #ebeef5;
+}
+
+:deep(.el-select-dropdown__item) {
+  color: #303133;
+}
+
+:deep(.el-select-dropdown__item.hover),
+:deep(.el-select-dropdown__item:hover) {
+  background: #f5f7fa;
+}
+
+:deep(.el-tag) {
+  border: none;
 }
 </style>

@@ -390,6 +390,8 @@ onUnmounted(() => {
 
 .stat-card {
   border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .stat-card :deep(.el-card__body) {
@@ -419,13 +421,13 @@ onUnmounted(() => {
 .stat-value {
   font-size: 28px;
   font-weight: 700;
-  color: #303133;
+  color: #fff;
   line-height: 1.2;
 }
 
 .stat-title {
   font-size: 14px;
-  color: #909399;
+  color: rgba(255, 255, 255, 0.5);
   margin-top: 5px;
 }
 
@@ -455,6 +457,8 @@ onUnmounted(() => {
 
 .chart-card {
   border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .chart-header {
@@ -466,7 +470,7 @@ onUnmounted(() => {
 .chart-title {
   font-size: 16px;
   font-weight: 600;
-  color: #303133;
+  color: #fff;
 }
 
 .chart-container {
@@ -476,6 +480,8 @@ onUnmounted(() => {
 
 .table-card {
   border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 :deep(.el-progress-bar__outer) {

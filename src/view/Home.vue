@@ -1,34 +1,56 @@
 <template>
-  <div>
+  <div class="home-wrapper">
     <el-container class="home-container">
       <!-- Header -->
       <el-header class="header">
-        <el-row>
-          <el-col :span="16">
-            <p class="system-name">听力测试后台管理系统</p>
-          </el-col>
-          <el-col :offset="12" :span="8" style="min-width: 150px">
-            <el-dropdown style="float: right; margin: 20px 10px">
+        <div class="header-content">
+          <div class="logo-section">
+            <div class="logo-icon">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 2C10.3431 2 9 3.34315 9 5V12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12V5C15 3.34315 13.6569 2 12 2Z" fill="currentColor"/>
+                <path d="M19 12C19 14.7614 16.7614 17 14 17H10C7.23858 17 5 14.7614 5 12V12C5 9.23858 7.23858 7 10 7H14C16.7614 7 19 9.23858 19 12Z" fill="currentColor" opacity="0.5"/>
+              </svg>
+            </div>
+            <span class="system-name">听力测试后台管理系统</span>
+          </div>
+          
+          <div class="user-section">
+            <el-dropdown trigger="click" @command="handleCommand">
+              <div class="user-info">
+                <el-avatar :size="36" class="user-avatar">
+                  <el-icon><User /></el-icon>
+                </el-avatar>
+                <span class="username">{{ adminName }}</span>
+                <el-icon class="arrow"><ArrowDown /></el-icon>
+              </div>
               <template #dropdown>
                 <el-dropdown-menu>
+                  <el-dropdown-item command="profile">
+                    <el-icon><UserFilled /></el-icon>
+                    个人中心
+                  </el-dropdown-item>
+                  <el-dropdown-item command="logout" divided>
+                    <el-icon><SwitchButton /></el-icon>
+                    退出登录
+                  </el-dropdown-item>
                 </el-dropdown-menu>
               </template>
             </el-dropdown>
-          </el-col>
-        </el-row>
+          </div>
+        </div>
       </el-header>
 
-      <el-container style="overflow: auto">
+      <el-container class="content-wrapper">
         <!-- 菜单 -->
         <el-aside class="aside">
           <el-menu
             router
             :default-active="activePath"
-            class="el-menu-vertical-demo"
+            class="el-menu-vertical"
             :collapse="isCollapse"
-            background-color="#304156"
-            text-color="#bfcbd9"
-            active-text-color="#409EFF"
+            background-color="transparent"
+            text-color="rgba(255, 255, 255, 0.7)"
+            active-text-color="#06b6d4"
           >
             <!-- 首页 -->
             <el-menu-item index="/home/index">
@@ -95,11 +117,9 @@
         </el-aside>
 
         <!-- 主内容区域 -->
-        <el-container>
-          <el-main class="main">
-            <router-view></router-view>
-          </el-main>
-        </el-container>
+        <el-main class="main">
+          <router-view></router-view>
+        </el-main>
       </el-container>
     </el-container>
   </div>
@@ -110,26 +130,38 @@ import { onBeforeMount, ref, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import {
   House, User, Headset, Document, Tools, DataLine,
-  UserFilled, Lock, TrendCharts, MagicStick, Bell, List, Operation
+  UserFilled, Lock, TrendCharts, MagicStick, Bell,
+  ArrowDown, SwitchButton
 } from '@element-plus/icons-vue';
+import { ElMessage } from 'element-plus';
 
 const router = useRouter();
 const route = useRoute();
 
+const adminName = ref('管理员');
+const isCollapse = ref(false);
+const activePath = ref('/home/index');
+
 // 挂载 DOM 之前
 onBeforeMount(() => {
-  // 初始化 activePath
   activePath.value = sessionStorage.getItem('activePath') || '/home/index';
+  
+  // 获取登录用户信息
+  const adminStr = sessionStorage.getItem('admin');
+  if (adminStr) {
+    try {
+      const admin = JSON.parse(adminStr);
+      adminName.value = admin.name || '管理员';
+    } catch (e) {
+      console.error('解析用户信息失败', e);
+    }
+  }
 });
-
-let isCollapse = ref(false);
-let activePath = ref('/home/index');
 
 // 监听路由变化
 watch(
   () => route.path,
   (newPath) => {
-    // 更新 activePath
     activePath.value = newPath;
     sessionStorage.setItem('activePath', newPath);
   },
@@ -151,6 +183,17 @@ const goToTestResults = (medicalId) => {
   });
 };
 
+// 用户菜单操作
+const handleCommand = (command) => {
+  if (command === 'logout') {
+    sessionStorage.clear();
+    router.push('/login');
+    ElMessage.success('已退出登录');
+  } else if (command === 'profile') {
+    ElMessage.info('个人中心功能开发中');
+  }
+};
+
 // 退出登录
 const logout = () => {
   sessionStorage.clear();
@@ -159,88 +202,183 @@ const logout = () => {
 </script>
 
 <style scoped>
+.home-wrapper {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
 .home-container {
-  position: fixed; /* 改为 fixed 确保占满视口 */
-  top: 0;
-  left: 0;
-  width: 100vw; /* 确保占满整个视口宽度 */
-  height: 100vh; /* 确保占满整个视口高度 */
+  width: 100%;
+  height: 100%;
   display: flex;
-  flex-direction: column; /* 保证父容器纵向布局 */
+  flex-direction: column;
+  background: #0f0f23;
 }
 
 /* Header 样式 */
 .header {
-  background: #304156;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  flex-shrink: 0;
+  height: 64px;
+  padding: 0 24px;
+}
+
+.header-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-section {
   display: flex;
   align-items: center;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  flex-shrink: 0; /* 防止 Header 被压缩 */
+  gap: 12px;
+}
+
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  color: #06b6d4;
+}
+
+.logo-icon svg {
   width: 100%;
+  height: 100%;
 }
 
 .system-name {
-  height: 100%;
-  position: relative;
+  font-size: 20px;
+  font-weight: 600;
   color: #fff;
-  font-size: 26px;
-  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+
+.user-info:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .user-avatar {
-  cursor: pointer;
+  background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+}
+
+.username {
+  color: #fff;
+  font-size: 14px;
+}
+
+.arrow {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
+}
+
+/* 内容区域 */
+.content-wrapper {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
 }
 
 /* 菜单栏样式 */
 .aside {
-  background: #304156;
-  width: 200px; /* 固定宽度 */
-  transition: width 0.3s ease;
-  flex-shrink: 0; /* 防止菜单栏被压缩 */
+  width: 220px;
+  background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
-.el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 200px;
-  min-height: 400px;
+.aside::-webkit-scrollbar {
+  width: 4px;
 }
 
-.el-menu {
-  border-right: none;
-}
-
-.el-menu-item {
-  margin: 5px 0;
+.aside::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 4px;
 }
 
-.el-menu-item.is-active {
-  background-color: #409EFF !important;
-  color: #fff !important;
+.el-menu-vertical {
+  border-right: none;
+}
+
+.el-menu-vertical:not(.el-menu--collapse) {
+  width: 220px;
+}
+
+.el-menu-item {
+  margin: 4px 12px;
+  border-radius: 8px;
+  transition: all 0.3s;
 }
 
 .el-menu-item:hover {
-  background-color: rgba(64, 158, 255, 0.1);
+  background: rgba(6, 182, 212, 0.1) !important;
 }
 
-/* 折叠按钮样式 */
-.toggle-button {
-  background-color: #263445;
-  padding: 10px;
-  text-align: center;
-  cursor: pointer;
-  color: #bfcbd9;
-  border-bottom: 1px solid #1f2d3d;
+.el-menu-item.is-active {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(139, 92, 246, 0.2)) !important;
+  border-left: 3px solid #06b6d4;
 }
 
-.toggle-button:hover {
-  background-color: #1f2d3d;
+.el-menu-item .el-icon {
+  color: inherit;
+}
+
+/* 子菜单样式 */
+:deep(.el-sub-menu__title) {
+  border-radius: 8px;
+  margin: 4px 12px;
+}
+
+:deep(.el-sub-menu__title:hover) {
+  background: rgba(6, 182, 212, 0.1) !important;
+}
+
+:deep(.el-menu--inline) {
+  background: rgba(0, 0, 0, 0.2) !important;
+}
+
+:deep(.el-sub-menu.is-active > .el-sub-menu__title) {
+  color: #06b6d4 !important;
 }
 
 /* 主内容区域样式 */
 .main {
+  flex: 1;
   padding: 20px;
   background: #f0f2f5;
-  flex-grow: 1; /* 确保内容区域占满剩余空间 */
   overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.main::-webkit-scrollbar {
+  width: 8px;
+}
+
+.main::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.main::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
 }
 </style>

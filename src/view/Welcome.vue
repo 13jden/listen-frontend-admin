@@ -2,42 +2,60 @@
   <div class="dashboard">
     <!-- 头部 -->
     <div class="header">
-      <h2>实时概况</h2>
-      <p>更新时间：{{ updateTime }}</p>
+      <div class="header-content">
+        <div class="header-text">
+          <h2>实时概况</h2>
+          <p>更新时间：{{ updateTime }}</p>
+        </div>
+        <div class="header-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 2C10.3431 2 9 3.34315 9 5V12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12V5C15 3.34315 13.6569 2 12 2Z" fill="currentColor"/>
+            <path d="M19 12C19 14.7614 16.7614 17 14 17H10C7.23858 17 5 14.7614 5 12V12C5 9.23858 7.23858 7 10 7H14C16.7614 7 19 9.23858 19 12Z" fill="currentColor" opacity="0.5"/>
+          </svg>
+        </div>
+      </div>
     </div>
 
     <!-- 统计卡片 -->
     <el-row :gutter="20" class="stats">
-      <!-- 第一行 -->
       <el-col :span="12" v-for="(item, index) in statsData.slice(0, 2)" :key="item.label">
-        <el-card class="stat-card" :style="getCardStyle(index)" @click="handleCardClick(index)">
-          <div class="stat-header">
-            <span>{{ item.label }}</span>
-          </div>
-          <div class="stat-value">{{ item.value }}</div>
-          <div class="stat-footer">
-            较上期
-            <span class="stat-change" :class="{'up': item.change > 0, 'down': item.change < 0}">
-              {{ item.change > 0 ? '▲' : '▼' }}{{ Math.abs(item.change) }}%
-            </span>
+        <el-card class="stat-card" :class="'card-' + index" @click="handleCardClick(index)">
+          <div class="stat-content">
+            <div class="stat-icon">
+              <el-icon><component :is="getIcon(index)" /></el-icon>
+            </div>
+            <div class="stat-info">
+              <div class="stat-header">{{ item.label }}</div>
+              <div class="stat-value">{{ item.value }}</div>
+              <div class="stat-footer">
+                较上期
+                <span class="stat-change" :class="{'up': item.change > 0, 'down': item.change < 0}">
+                  {{ item.change > 0 ? '↑' : '↓' }}{{ Math.abs(item.change) }}%
+                </span>
+              </div>
+            </div>
           </div>
         </el-card>
       </el-col>
     </el-row>
 
     <el-row :gutter="20" class="stats">
-      <!-- 第二行 -->
       <el-col :span="12" v-for="(item, index) in statsData.slice(2, 4)" :key="item.label">
-        <el-card class="stat-card" :style="getCardStyle(index + 2)" @click="handleCardClick(index + 2)">
-          <div class="stat-header">
-            <span>{{ item.label }}</span>
-          </div>
-          <div class="stat-value">{{ item.value }}</div>
-          <div class="stat-footer">
-            较上期
-            <span class="stat-change" :class="{'up': item.change > 0, 'down': item.change < 0}">
-              {{ item.change > 0 ? '▲' : '▼' }}{{ Math.abs(item.change) }}%
-            </span>
+        <el-card class="stat-card" :class="'card-' + (index + 2)" @click="handleCardClick(index + 2)">
+          <div class="stat-content">
+            <div class="stat-icon">
+              <el-icon><component :is="getIcon(index + 2)" /></el-icon>
+            </div>
+            <div class="stat-info">
+              <div class="stat-header">{{ item.label }}</div>
+              <div class="stat-value">{{ item.value }}</div>
+              <div class="stat-footer">
+                较上期
+                <span class="stat-change" :class="{'up': item.change > 0, 'down': item.change < 0}">
+                  {{ item.change > 0 ? '↑' : '↓' }}{{ Math.abs(item.change) }}%
+                </span>
+              </div>
+            </div>
           </div>
         </el-card>
       </el-col>
@@ -49,52 +67,40 @@
 import { ref, onMounted } from 'vue';
 import router from '../router/index';
 import { getdata } from '../api/admin';
-import { ElLoading } from 'element-plus';
+import { User, UserFilled, Document, TrendCharts } from '@element-plus/icons-vue';
 
-// 更新时间
-const updateTime = ref('2025/02/19');
-const loading = ref(false);
+const updateTime = ref('中...');
 
 const statsData = ref([]);
-// 获取卡片背景样式
-const getCardStyle = (index) => {
-  const gradients = [
-    'linear-gradient(135deg, #5a7df7, #76cefa)',
-    'linear-gradient(135deg, #abf2a5, #abf2a5)',
-    'linear-gradient(135deg, #ffc1a6, #ffb3ba)',
-    'linear-gradient(135deg, #9796f0, #9796f0)',
-  ];
-  return {
-    background: gradients[index % gradients.length],
-    color: '#fff',
-  };
-};
 
+const getIcon = (index) => {
+  const icons = [User, UserFilled, Document, TrendCharts];
+  return icons[index % icons.length];
+};
 
 const handleCardClick = (index) => {
   let targetRoute = '';
   switch (index) {
     case 0:
-      targetRoute = '/home/user'; // 新注册人数页面
+      targetRoute = '/home/user';
       break;
     case 1:
-      targetRoute = '/home/user'; // 今日测试数页面
+      targetRoute = '/home/user';
       break;
     case 2:
-      targetRoute = '/home/test'; // 总测试数页面
+      targetRoute = '/home/test';
       break;
     case 3:
-      targetRoute = '/home/test'; // 新增反馈页面
+      targetRoute = '/home/test';
       break;
     default:
       break;
   }
-  sessionStorage.setItem('activePath',targetRoute);
+  sessionStorage.setItem('activePath', targetRoute);
   router.push(targetRoute); 
 };
 
-
-// 初始化默认数据，避免等待API时空白
+// 初始化默认数据
 statsData.value = [
   { label: '新注册人数', value: '--', change: 0 },
   { label: '总人数', value: '--', change: 0 },
@@ -108,7 +114,6 @@ const fetchData = async () => {
     const response = await getdata();
     const data = response || {};
     
-    // 更新 statsData
     statsData.value = [
       { label: '新注册人数', value: data.newUserNum ?? 0, change: data.userImprove ?? 0 },
       { label: '总人数', value: data.userNum ?? 0, change: data.userNumImprove ?? 0 },
@@ -122,7 +127,6 @@ const fetchData = async () => {
     }
   } catch (error) {
     console.error('获取数据失败:', error);
-    // 接口失败时显示默认数据
     statsData.value = [
       { label: '新注册人数', value: 0, change: 0 },
       { label: '总人数', value: 0, change: 0 },
@@ -132,7 +136,6 @@ const fetchData = async () => {
   }
 };
 
-// 在组件挂载时调用接口
 onMounted(() => {
   sessionStorage.setItem('activePath', '/home/index');
   fetchData();
@@ -140,82 +143,141 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* 页面容器 */
 .dashboard {
   padding: 24px;
-  background-color: #f5f5f5;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  min-height: 100%;
 }
 
 /* 头部 */
 .header {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  padding: 24px 32px;
   margin-bottom: 24px;
-  padding: 24px;
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 1200px;
-  text-align: center;
 }
 
-.header h2 {
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-text h2 {
   font-size: 24px;
-  font-weight: bold;
-  color: #193273;
+  font-weight: 600;
+  color: #fff;
   margin-bottom: 8px;
 }
 
-.header p {
+.header-text p {
   font-size: 14px;
-  color: #666;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.header-icon {
+  width: 60px;
+  height: 60px;
+  color: rgba(6, 182, 212, 0.5);
+}
+
+.header-icon svg {
+  width: 100%;
+  height: 100%;
 }
 
 /* 统计卡片 */
 .stats {
-  margin-bottom: 24px;
-  width: 100%;
-  max-width: 1200px;
+  margin-bottom: 20px;
 }
 
 .stat-card {
-  padding: 40px; /* 放大内边距 */
-  text-align: center;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  color: #fff;
-  height: 200px; /* 固定高度 */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  border: none;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 100%);
+  pointer-events: none;
 }
 
 .stat-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* 卡片颜色 */
+.card-0 {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.card-1 {
+  background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+}
+
+.card-2 {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.card-3 {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.stat-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 8px;
+}
+
+.stat-icon {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  font-size: 28px;
+  color: #fff;
+}
+
+.stat-info {
+  flex: 1;
 }
 
 .stat-header {
-  font-size: 20px; /* 放大字体 */
-  margin-bottom: 16px;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 8px;
 }
 
 .stat-value {
-  font-size: 48px; /* 放大字体 */
-  font-weight: bold;
-  margin: 16px 0;
+  font-size: 36px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px;
 }
 
 .stat-footer {
-  font-size: 16px; /* 放大字体 */
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .stat-change {
-  margin-left: 5px;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .stat-change.up {
@@ -224,5 +286,27 @@ onMounted(() => {
 
 .stat-change.down {
   color: #f5222d;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .header-icon {
+    display: none;
+  }
+  
+  .stat-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .stat-value {
+    font-size: 28px;
+  }
 }
 </style>

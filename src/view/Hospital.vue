@@ -159,16 +159,16 @@ onMounted(() => {
 <style scoped>
 .hospital-management {
   padding: 20px;
-  background-color: #f5f7fa;
-  border-radius: 8px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  background: #fff;
+  border-radius: 12px;
 }
 
 .title {
   text-align: center;
   margin-bottom: 20px;
   font-size: 24px;
-  color: #303133;
+  font-weight: 600;
+  color: #fff;
 }
 
 .pagination {
@@ -185,24 +185,60 @@ onMounted(() => {
   margin-top: 20px;
 }
 
+.el-table__header th {
+  background: #f5f7fa !important;
+  color: #303133 !important;
+}
+
+.el-table__body td {
+  background: #fff !important;
+  color: #303133;
+  border-bottom: 1px solid #ebeef5 !important;
+}
+
 .el-dialog {
   border-radius: 8px;
+  background: #fff;
 }
 
 .el-dialog__header {
-  background-color: #f5f7fa;
+  background: #f5f7fa;
   border-bottom: 1px solid #e4e7ed;
   border-radius: 8px 8px 0 0;
   padding: 15px 20px;
 }
 
+.el-dialog__title {
+  color: #303133;
+}
+
 .el-dialog__body {
   padding: 20px;
+  color: #606266;
 }
 
 .el-dialog__footer {
   border-top: 1px solid #e4e7ed;
   padding: 15px 20px;
   text-align: right;
+}
+
+:deep(.el-input__wrapper) {
+  background: #fff !important;
+  border: 1px solid #dcdfe6 !important;
+  box-shadow: none !important;
+}
+
+:deep(.el-input__inner) {
+  color: #303133 !important;
+}
+
+:deep(.el-button--primary) {
+  background: #409eff;
+  border: none;
+}
+
+:deep(.el-form-item__label) {
+  color: #606266 !important;
 }
 </style>

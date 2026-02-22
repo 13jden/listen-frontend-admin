@@ -178,16 +178,16 @@ const togglePanel = () => {
 <style scoped>
 .test-management {
   padding: 20px;
-  background-color: #f5f7fa;
+  background: #fff;
   width: 100%;
-  border-radius: 8px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
 }
 
 .title {
   text-align: center;
   margin-bottom: 20px;
   font-size: 24px;
+  font-weight: 600;
   color: #303133;
 }
 
@@ -197,6 +197,9 @@ const togglePanel = () => {
   align-items: center;
   margin-bottom: 20px;
   width: 100%;
+  padding: 15px;
+  background: #f5f7fa;
+  border-radius: 12px;
 }
 
 .layout {
@@ -212,26 +215,26 @@ const togglePanel = () => {
 .right-panel {
   flex: 1;
   padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  background: #fff;
+  border: 1px solid #ebeef5;
+  border-radius: 12px;
   overflow: hidden;
   transition: all 0.3s ease;
-  
 }
+
 .left-panel.expanded {
   flex: 1;
 }
 
 .right-panel.expanded {
   flex: 5 !important;
-  /* 展开时右侧面板占更大空间 */
 }
 
 .detail-title {
   text-align: center;
   margin-bottom: 20px;
   font-size: 18px;
+  font-weight: 600;
   color: #303133;
 }
 
@@ -249,16 +252,19 @@ const togglePanel = () => {
 
 .el-table {
   margin-top: 20px;
-}
-
-.el-table--striped .el-table__body tr.el-table__row--striped td {
-  background-color: #fafafa;
+  background: #fff !important;
 }
 
 .el-table__header th {
-  background-color: #f5f7fa;
-  font-weight: bold;
+  background: #f5f7fa !important;
+  font-weight: 600;
+  color: #303133 !important;
+}
+
+.el-table__body td {
+  background: #fff !important;
   color: #303133;
+  border-bottom: 1px solid #ebeef5 !important;
 }
 
 .expand-icon {

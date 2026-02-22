@@ -389,6 +389,8 @@ onMounted(() => {
 
 .config-card, .result-card, .detail-card, .history-card, .diagnosis-card {
   border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .card-header {
@@ -396,12 +398,13 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   font-weight: 600;
+  color: #fff;
 }
 
 .empty-result {
   text-align: center;
   padding: 60px 20px;
-  color: #909399;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .empty-result p {
@@ -421,20 +424,20 @@ onMounted(() => {
   align-items: center;
   gap: 8px;
   font-size: 16px;
-  color: #303133;
+  color: #fff;
   margin-bottom: 15px;
   padding-bottom: 10px;
-  border-bottom: 1px solid #ebeef5;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .finding-card {
-  background-color: #f0f9eb;
-  border-color: #e1f3d8;
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.3);
 }
 
 .finding-card p {
   line-height: 1.8;
-  color: #303133;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .error-tags {
@@ -456,7 +459,7 @@ onMounted(() => {
 
 .result-desc {
   margin-top: 10px;
-  color: #909399;
+  color: rgba(255, 255, 255, 0.5);
   font-size: 13px;
 }
 
@@ -466,8 +469,8 @@ onMounted(() => {
 }
 
 .advice-card {
-  background-color: #ecf5ff;
-  border-color: #d9ecff;
+  background-color: rgba(6, 182, 212, 0.1);
+  border-color: rgba(6, 182, 212, 0.3);
 }
 
 .advice-list {
@@ -482,6 +485,7 @@ onMounted(() => {
   gap: 10px;
   padding: 10px 0;
   line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .quick-actions {
@@ -501,13 +505,13 @@ onMounted(() => {
 
 .history-item {
   padding: 12px;
-  border-bottom: 1px solid #ebeef5;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .history-item:hover {
-  background-color: #f5f7fa;
+  background-color: rgba(6, 182, 212, 0.1);
 }
 
 .history-item:last-child {
@@ -516,13 +520,13 @@ onMounted(() => {
 
 .history-title {
   font-size: 14px;
-  color: #303133;
+  color: #fff;
   margin-bottom: 5px;
 }
 
 .history-time {
   font-size: 12px;
-  color: #909399;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .detail-stats {
@@ -534,14 +538,14 @@ onMounted(() => {
 .detail-item {
   text-align: center;
   padding: 15px;
-  background-color: #f5f7fa;
+  background-color: rgba(255, 255, 255, 0.05);
   border-radius: 8px;
 }
 
 .detail-value {
   font-size: 24px;
   font-weight: 700;
-  color: #409eff;
+  color: #06b6d4;
 }
 
 .detail-label {

@@ -307,6 +307,7 @@ onMounted(() => {
   text-align: center;
   margin-bottom: 20px;
   font-size: 24px;
+  font-weight: 600;
   color: #303133;
 }
 
@@ -322,27 +323,63 @@ onMounted(() => {
 
 .el-table {
   margin-top: 20px;
+  background: transparent !important;
+}
+
+.el-table__header th {
+  background: #f5f7fa !important;
+  color: #303133 !important;
+}
+
+.el-table__body td {
+  background: #fff !important;
+  color: #303133;
+  border-bottom: 1px solid #ebeef5 !important;
 }
 
 .el-dialog {
-  border-radius: 8px;
+  border-radius: 16px;
+  background: #1a1a2e;
 }
 
 .el-dialog__header {
-  background-color: #f5f7fa;
-  border-bottom: 1px solid #e4e7ed;
-  border-radius: 8px 8px 0 0;
+  background: rgba(6, 182, 212, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px 16px 0 0;
   padding: 15px 20px;
+}
+
+.el-dialog__title {
+  color: #fff;
 }
 
 .el-dialog__body {
   padding: 20px;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .el-dialog__footer {
-  border-top: 1px solid #e4e7ed;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding: 15px 20px;
   text-align: right;
 }
 
+:deep(.el-input__wrapper) {
+  background: #fff !important;
+  border: 1px solid #dcdfe6 !important;
+  box-shadow: none !important;
+}
+
+:deep(.el-input__inner) {
+  color: #303133 !important;
+}
+
+:deep(.el-button--primary) {
+  background: #409eff;
+  border: none;
+}
+
+:deep(.el-form-item__label) {
+  color: #606266 !important;
+}
 </style>
