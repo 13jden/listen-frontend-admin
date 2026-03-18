@@ -389,8 +389,8 @@ onMounted(() => {
 
 .config-card, .result-card, .detail-card, .history-card, .diagnosis-card {
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #fff;
+  border: 1px solid #e4e7ed;
 }
 
 .card-header {
@@ -398,13 +398,13 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   font-weight: 600;
-  color: #fff;
+  color: #303133;
 }
 
 .empty-result {
   text-align: center;
   padding: 60px 20px;
-  color: rgba(255, 255, 255, 0.5);
+  color: #fff;
 }
 
 .empty-result p {
@@ -424,20 +424,20 @@ onMounted(() => {
   align-items: center;
   gap: 8px;
   font-size: 16px;
-  color: #fff;
+  color: #303133;
   margin-bottom: 15px;
   padding-bottom: 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid #ebeef5;
 }
 
 .finding-card {
-  background: rgba(6, 182, 212, 0.1);
-  border: 1px solid rgba(6, 182, 212, 0.3);
+  background: #f0f9ff;
+  border: 1px solid #bae7ff;
 }
 
 .finding-card p {
   line-height: 1.8;
-  color: rgba(255, 255, 255, 0.8);
+  color: #303133;
 }
 
 .error-tags {
@@ -459,7 +459,7 @@ onMounted(() => {
 
 .result-desc {
   margin-top: 10px;
-  color: rgba(255, 255, 255, 0.5);
+  color: #909399;
   font-size: 13px;
 }
 
@@ -469,8 +469,8 @@ onMounted(() => {
 }
 
 .advice-card {
-  background-color: rgba(6, 182, 212, 0.1);
-  border-color: rgba(6, 182, 212, 0.3);
+  background-color: #f0f9ff;
+  border-color: #bae7ff;
 }
 
 .advice-list {
@@ -485,7 +485,7 @@ onMounted(() => {
   gap: 10px;
   padding: 10px 0;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.8);
+  color: #303133;
 }
 
 .quick-actions {
@@ -505,13 +505,13 @@ onMounted(() => {
 
 .history-item {
   padding: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid #ebeef5;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .history-item:hover {
-  background-color: rgba(6, 182, 212, 0.1);
+  background-color: #f5f7fa;
 }
 
 .history-item:last-child {
@@ -520,13 +520,13 @@ onMounted(() => {
 
 .history-title {
   font-size: 14px;
-  color: #fff;
+  color: #303133;
   margin-bottom: 5px;
 }
 
 .history-time {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.5);
+  color: #909399;
 }
 
 .detail-stats {
@@ -538,7 +538,8 @@ onMounted(() => {
 .detail-item {
   text-align: center;
   padding: 15px;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: #fff;
+  border: 1px solid #e4e7ed;
   border-radius: 8px;
 }
 

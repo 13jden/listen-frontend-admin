@@ -390,8 +390,8 @@ onUnmounted(() => {
 
 .stat-card {
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #fff;
+  border: 1px solid #e4e7ed;
 }
 
 .stat-card :deep(.el-card__body) {
@@ -421,13 +421,13 @@ onUnmounted(() => {
 .stat-value {
   font-size: 28px;
   font-weight: 700;
-  color: #fff;
+  color: #303133;
   line-height: 1.2;
 }
 
 .stat-title {
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.5);
+  color: #909399;
   margin-top: 5px;
 }
 
@@ -449,6 +449,8 @@ onUnmounted(() => {
 
 .filter-card {
   margin-bottom: 20px;
+  background: #fff;
+  border: 1px solid #e4e7ed;
 }
 
 .chart-row {
@@ -457,8 +459,8 @@ onUnmounted(() => {
 
 .chart-card {
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #fff;
+  border: 1px solid #e4e7ed;
 }
 
 .chart-header {
@@ -470,7 +472,7 @@ onUnmounted(() => {
 .chart-title {
   font-size: 16px;
   font-weight: 600;
-  color: #fff;
+  color: #303133;
 }
 
 .chart-container {
@@ -480,8 +482,8 @@ onUnmounted(() => {
 
 .table-card {
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #fff;
+  border: 1px solid #e4e7ed;
 }
 
 :deep(.el-progress-bar__outer) {
