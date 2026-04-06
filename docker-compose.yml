@@ -5,12 +5,19 @@ services:
     image: crpi-aer4k3m8uw2sue3f.cn-hangzhou.personal.cr.aliyuncs.com/dzkdzk/listen-admin-frontend:latest
     container_name: listen-admin-frontend
     ports:
-      - "80:80"  # 服务器80端口映射到容器80端口
+      - "80:80"
     restart: unless-stopped
     environment:
       - TZ=Asia/Shanghai
+    volumes:
+      # 挂载 nginx 配置
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      # 挂载文件存储目录
+      - /usr/local/listen/audio:/usr/local/listen/audio:ro
+      - /usr/local/listen/temp:/usr/local/listen/temp:ro
+      - /usr/local/listen/userFile:/usr/local/listen/userFile:ro
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:80"]  # 修改为80端口
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
       interval: 30s
       timeout: 10s
       retries: 3
