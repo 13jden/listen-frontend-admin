@@ -25,9 +25,7 @@ export const uploadAudio = async (file) => {
   const formData = new FormData();
   formData.append('testAudio', file); // 确保 file 是 File 对象
   try {
-    const response = await httpPost('/audio/uploadFile', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
+    const response = await httpPost('/audio/uploadFile', formData);
     return response.data; // 返回上传的文件名
   } catch (error) {
     throw new Error('音频文件上传失败');
@@ -37,18 +35,8 @@ export const uploadAudio = async (file) => {
 // 添加音频
 export const addAudio = async (content, adminId, fileName) => {
   try {
-    // 创建 FormData 对象
-    const formData = new FormData();
-    formData.append('content', content); // 添加音频描述
-    formData.append('adminId', adminId); // 添加管理员 ID
-    formData.append('fileName', fileName); // 添加文件名
-
-    // 发送 POST 请求
-    const response = await httpPost('/audio/addFile', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
-    console.log(response);
-    return response.data; // 返回音频数据
+    const response = await httpPost('/audio/addFile', { content, adminId, fileName });
+    return response;
   } catch (error) {
     throw new Error('添加音频失败');
   }

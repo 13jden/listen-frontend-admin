@@ -140,7 +140,7 @@ const handleBeforeUpload = (file) => {
 const handleUpload = async (file) => {
   try {
     const response = await uploadAudio(file.file);
-    uploadedFileName.value = response;
+    uploadedFileName.value = response.fileName;
     console.log(response);
     handleUploadSuccess(response);
   } catch (error) {
